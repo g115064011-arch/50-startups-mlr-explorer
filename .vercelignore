@@ -1,0 +1,13 @@
+# Vercel Deployment Ignore File
+venv/
+.venv/
+backup_*/
+analysis/test_*.py
+analysis/verify_all.py
+powershell.cmd
+*.log
+.git
+.gitignore
+.vscode
+.idea
+README.md

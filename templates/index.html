@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>50 家新創公司｜多元線性迴歸分析平台 — 50 Startups MLR Explorer</title>
+  <meta name="description" content="FIELDNOTES / DATA LAB — 50 家新創公司多元線性迴歸分析平台，涵蓋 CRISP-DM 六大分析階段、無資料洩漏前處理與五種特徵選擇方法比較。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ── TOP LAB BADGE & NAVIGATION BAR ───────────────────── -->
+  <header class="lab-header">
+    <div class="lab-header-inner">
+      <div class="lab-identity">
+        <div class="lab-mark">
+          <span class="lab-monogram">FN</span>
+        </div>
+        <div class="lab-titles">
+          <div class="lab-kicker">
+            <span class="kicker-tag">FIELDNOTES</span>
+            <span class="kicker-sep">/</span>
+            <span class="kicker-sub">DATA LAB · STATISTICAL ATELIER</span>
+          </div>
+          <h1 class="lab-main-title">50 家新創公司｜多元線性迴歸分析平台</h1>
+          <p class="lab-byline">50 Startups Multiple Linear Regression Explorer · CRISP-DM Framework</p>
+        </div>
+      </div>
+
+      <!-- Problem Selector Dropdown (老師加分重點) -->
+      <div class="experiment-picker">
+        <label class="picker-label" for="problem-select">
+          <span class="picker-icon">🔬</span>
+          <span>SELECT EXPERIMENT</span>
+        </label>
+        <div class="select-shell">
+          <select id="problem-select" onchange="switchProblem(this.value)">
+            <option value="1">Experiment 01 — Problem 1: Basic Multiple Linear Regression</option>
+            <option value="2">Experiment 02 — Problem 2: Feature Selection &amp; Model Comparison</option>
+            <option value="3">Experiment 03 — Custom Dataset: 自訂 CSV 資料集迴歸分析</option>
+          </select>
+          <span class="select-caret"></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT CANVAS ──────────────────────────────── -->
+  <main class="lab-main">
+
+    <!-- Global Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+      <div class="loading-card">
+        <div class="editorial-spinner"></div>
+        <p id="loading-message" class="loading-text">計算與載入資料中...</p>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════
+         EXPERIMENT 01: PROBLEM 1 (Basic Multiple Linear Regression)
+         ══════════════════════════════════════════════════════ -->
+    <section id="panel-1" class="experiment-panel active">
+
+      <!-- Section Header Banner -->
+      <div class="panel-banner">
+        <div class="banner-meta">
+          <span class="exp-badge">EXPERIMENT 01</span>
+          <span class="status-pill status-ready">VERIFIED · NO LEAKAGE</span>
+        </div>
+        <h2 class="panel-heading">Problem 1: 基礎多元線性迴歸分析 (Basic Multiple Linear Regression)</h2>
+        <p class="panel-lead">
+          依循 <strong>CRISP-DM 六大分析階段</strong>，以加州（California）為對照基準組消除虛擬變數陷阱（Dummy Variable Trap），
+          建構嚴格防範資料洩漏（Data Leakage Free）的多元線性迴歸模型，解析研發、管理、行銷與設點州別之統計預測關聯。
+        </p>
+      </div>
+
+      <!-- Statistical Protocol Callout -->
+      <div class="editorial-callout mt-md">
+        <div class="callout-label">
+          <span class="callout-icon">📌</span>
+          <span>METHODOLOGY DISCLOSURE · 方法學規範說明</span>
+        </div>
+        <div class="callout-content">
+          <strong>嚴格無洩漏切分</strong>：全資料集 50 筆，以 <code>test_size=0.2, random_state=42</code> 劃分訓練集 40 筆與測試集 10 筆。所有前處理（類別編碼轉換器）均嚴格僅在訓練集擬合（<code>fit</code>），再套用於獨立測試集（<code>transform</code>），確保盲測外推評估具備真實客觀性。
+        </div>
+      </div>
+
+      <!-- Key Metrics Row -->
+      <div class="section-subhead mt-lg">
+        <span class="subhead-number">01</span>
+        <h3 class="subhead-title">核心評估指標 · Model Performance Metrics</h3>
+      </div>
+      <div id="p1-metrics" class="metrics-grid">
+        <div class="metric-box loading-box">讀取指標中...</div>
+      </div>
+
+      <!-- Research Insight: R2 Gap & Sample Size Sensitivity -->
+      <div class="insight-box mt-md">
+        <div class="insight-header">
+          <span class="insight-tag">STATISTICAL NOTE</span>
+          <h4 class="insight-title">關於訓練集與測試集 R² 差距之客觀解讀</h4>
+        </div>
+        <p class="insight-text">
+          本模型在訓練集之判定係數為 <code>R² = 0.9537</code>，測試集為 <code>R² = 0.8987</code>（差距約 0.055）。因總樣本量有限（N=50，測試集僅 10 筆），小樣本條件下個別樣本的微小誤差變動即會對總體 R² 造成顯著波動。此差距客觀反映隨機切分的抽樣敏感性，而非常態大規模訓練下的嚴重過度擬合（Overfitting）。
+        </p>
+      </div>
+
+      <!-- Visual Diagnostic Charts Row -->
+      <div class="section-subhead mt-xl">
+        <span class="subhead-number">02</span>
+        <h3 class="subhead-title">視覺化診斷圖表 · Diagnostic Visualizations</h3>
+      </div>
+
+      <div class="charts-dual-grid">
+        <!-- Chart 1: Actual vs Predicted -->
+        <div class="editorial-chart-card">
+          <div class="chart-card-meta">
+            <span class="chart-type-tag">REGRESSION FIT</span>
+            <h4 class="chart-title">真實值 vs 預測值 (Actual vs Predicted)</h4>
+          </div>
+          <div class="chart-frame" id="chart-actual-vs-predicted">
+            <div class="chart-loading-ph">載入圖表中...</div>
+          </div>
+          <div class="chart-footnote">
+            <span class="fn-marker">解讀要點：</span>
+            測試集盲測樣本點（深綠色點）緊密圍繞杏橘色虛線（\(y = x\) 理想基準線），整體離散程度低，展現優良線性預測適配度。
+          </div>
+        </div>
+
+        <!-- Chart 2: Residual Plot -->
+        <div class="editorial-chart-card">
+          <div class="chart-card-meta">
+            <span class="chart-type-tag">ASSUMPTION CHECK</span>
+            <h4 class="chart-title">殘差分佈檢定 (Residual Plot)</h4>
+          </div>
+          <div class="chart-frame" id="chart-residual">
+            <div class="chart-loading-ph">載入圖表中...</div>
+          </div>
+          <div class="chart-footnote">
+            <span class="fn-marker">解讀要點：</span>
+            殘差大致散佈於零基準線兩側，無強烈喇叭狀擴散傾向。視覺觀察尚符合等變異性假設，但建議後續搭配 Breusch-Pagan 作正式統計檢定，避免僅憑視覺斷言。
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart 3: Feature Effects Dual Plot -->
+      <div class="editorial-chart-card mt-lg">
+        <div class="chart-card-meta">
+          <span class="chart-type-tag">COEFFICIENT BREAKDOWN</span>
+          <h4 class="chart-title">特徵效應長條圖 · 連續支出關聯 vs. 州別基準差異</h4>
+        </div>
+        <div class="chart-frame" id="chart-feature-coef">
+          <div class="chart-loading-ph">載入圖表中...</div>
+        </div>
+        <div class="chart-footnote">
+          <span class="fn-marker">解讀要點：</span>
+          左圖顯示連續支出每投入 $10,000 美元之獲利調整；右圖顯示相對於加州（California 基準組）之絕對差異金額（不乘萬倍），兩者尺度不同分開呈現。
+        </div>
+      </div>
+
+      <!-- Model Equation & Coefficient Table -->
+      <div class="section-subhead mt-xl">
+        <span class="subhead-number">03</span>
+        <h3 class="subhead-title">線性迴歸方程式與係數表 · Model Equation &amp; Coefficients</h3>
+      </div>
+
+      <div class="editorial-card">
+        <div class="equation-hero-box">
+          <div class="eq-label">MATHEMATICAL FORMULATION · 線性迴歸方程式</div>
+          <div id="p1-equation" class="eq-display">載入中...</div>
+        </div>
+        <div id="p1-coef-table" class="mt-md"></div>
+      </div>
+
+      <!-- Test Predictions Table (10 Samples) -->
+      <div class="section-subhead mt-xl">
+        <span class="subhead-number">04</span>
+        <h3 class="subhead-title">測試集 10 筆樣本預測結果對比 · Out-of-Sample Predictions</h3>
+      </div>
+
+      <div class="editorial-card">
+        <div class="table-legend-row">
+          <span class="legend-note">樣本量：N = 10 (測試集 20%) · 未參與模型訓練</span>
+          <span class="legend-badge">盲測驗證</span>
+        </div>
+        <div id="p1-predictions-table" class="table-scroll-container">載入中...</div>
+      </div>
+
+      <!-- CRISP-DM Six Phases -->
+      <div class="section-subhead mt-xl">
+        <span class="subhead-number">05</span>
+        <h3 class="subhead-title">CRISP-DM 資料探勘標準流程 · Six Analytical Phases</h3>
+      </div>
+
+      <div id="p1-crisp-dm" class="crisp-dm-atelier-grid"></div>
+
+      <!-- Research Insights List -->
+      <div class="section-subhead mt-xl">
+        <span class="subhead-number">06</span>
+        <h3 class="subhead-title">統計研究洞察與商業建議 · Research Insights</h3>
+      </div>
+
+      <div class="editorial-card">
+        <ul id="p1-insights" class="research-insights-deck">
+          <li class="loading-line">載入研究洞察中...</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         EXPERIMENT 02: PROBLEM 2 (Feature Selection & Model Comparison)
+         ══════════════════════════════════════════════════════ -->
+    <section id="panel-2" class="experiment-panel">
+
+      <!-- Section Header Banner -->
+      <div class="panel-banner">
+        <div class="banner-meta">
+          <span class="exp-badge">EXPERIMENT 02</span>
+          <span class="status-pill status-ready">5 METHODS · 5-FOLD CV MODEL SELECTION</span>
+        </div>
+        <h2 class="panel-heading">Problem 2: 特徵選擇與模型比較 (Feature Selection &amp; Model Comparison)</h2>
+        <p class="panel-lead">
+          採用 <strong>五種經典特徵選擇方法</strong> 評估各特徵子集之預測效能。
+          特徵選擇、超參數調校與最佳特徵數選定 <strong>嚴格僅在訓練集以 5-Fold 交叉驗證（Train CV R²）進行決策</strong>，
+          測試集分數僅作最後的盲測外推評估，杜絕任何測試集洩漏。
+        </p>
+      </div>
+
+      <!-- Action Trigger -->
+      <div class="action-card mt-lg" id="p2-load-section">
+        <div class="action-text-group">
+          <h4 class="action-title">執行五種特徵選擇與交叉驗證比較</h4>
+          <p class="action-desc">
+            包含 LassoCV（L1 正則化）、Forward SFS（逐步向前選擇）、RFE（遞迴特徵消除）、
+            ElasticNetCV（彈性網絡）以及 Exhaustive Search（31 種特徵組合窮舉）。
+          </p>
+        </div>
+        <div class="action-button-group">
+          <button id="p2-load-btn" class="btn-sage" onclick="loadProblem2()">
+            <span class="btn-icon">⚡</span>
+            <span>執行完整特徵選擇分析</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Statistical Protocol Callout for P2 -->
+      <div class="editorial-callout mt-md">
+        <div class="callout-label">
+          <span class="callout-icon">⚖️</span>
+          <span>STRICT VALIDATION PRINCIPLE · 嚴格無洩漏評估準則</span>
+        </div>
+        <div class="callout-content">
+          <strong>嚴禁以測試集 R² 挑選模型</strong>：避免在多種特徵組合中「挑選測試集分數最高者」所導致的測試集洩漏。本實驗所有演算法的最佳特徵組合挑選標準，均嚴格以訓練集 5-Fold 交叉驗證之平均判定係數（<code>Train CV R²</code>）為唯一決策依據，測試集 R² 僅作為最終盲測驗證報告。
+        </div>
+      </div>
+
+      <!-- Summary Comparison Table -->
+      <div class="card-wrapper mt-xl hidden" id="p2-summary-card">
+        <div class="section-subhead">
+          <span class="subhead-number">01</span>
+          <h3 class="subhead-title">五種特徵選擇方法表現綜合對照 · Method Comparison Matrix</h3>
+        </div>
+        <div class="editorial-card">
+          <div class="table-scroll-container" id="p2-summary-table"></div>
+        </div>
+      </div>
+
+      <!-- Comparison Chart Canvas (Ivory & Sage Colors) -->
+      <div class="card-wrapper mt-xl hidden" id="p2-chart-card">
+        <div class="section-subhead">
+          <span class="subhead-number">02</span>
+          <h3 class="subhead-title">模型評選指標對比圖 · Train 5-Fold CV R² vs. Test R²</h3>
+        </div>
+        <div class="editorial-card chart-canvas-card">
+          <div class="chart-canvas-header">
+            <span class="chart-canvas-legend">
+              <span class="legend-dot dot-cv"></span> 訓練集 5-Fold CV R² (選模唯一依據)
+              <span class="legend-dot dot-test ml-md"></span> 獨立測試集 Test R² (盲測外推評估)
+            </span>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="p2-r2-chart" width="940" height="350"></canvas>
+          </div>
+          <p class="chart-canvas-caption">
+            橫向長條清晰呈現各方法在訓練集交叉驗證（深森林綠）與獨立測試集（鼠尾草綠/暖杏橘）之判定係數。
+          </p>
+        </div>
+      <!-- Interactive k-Feature Explorer (Line Charts & Dynamic Sync) -->
+      <div class="card-wrapper mt-xl hidden" id="p2-k-explorer-card">
+        <div class="section-subhead">
+          <span class="subhead-number">03</span>
+          <h3 class="subhead-title">特徵數敏感度與動態折線圖 · Feature Count Dynamic Explorer (k=1～5)</h3>
+        </div>
+        <div class="editorial-card">
+          <div class="k-explorer-controls">
+            <div class="k-ctrl-group">
+              <label class="k-ctrl-label" for="p2-k-method-select">選擇逐步演算法：</label>
+              <select id="p2-k-method-select" class="custom-col-select" onchange="onP2KMethodChange(this.value)">
+                <option value="forward_sfs">Forward SFS (向前逐步選擇)</option>
+                <option value="rfe">RFE (遞迴特徵消除)</option>
+                <option value="exhaustive">Exhaustive Search (窮舉各 k 最優組合)</option>
+              </select>
+            </div>
+            <div class="k-ctrl-group">
+              <span class="k-ctrl-label">切換特徵數量 (k)：</span>
+              <div id="p2-k-buttons" class="k-btn-group"></div>
+            </div>
+          </div>
+
+          <!-- Dual Line Charts (R2 & RMSE vs k) -->
+          <div class="charts-dual-grid mt-md">
+            <div class="chart-canvas-card">
+              <div class="chart-canvas-header">
+                <span class="chart-canvas-legend">
+                  <span class="legend-dot dot-cv"></span> Train 5-Fold CV R² (選模依據)
+                  <span class="legend-dot dot-test ml-md"></span> Test R² (盲測外推)
+                </span>
+              </div>
+              <div class="canvas-wrapper">
+                <canvas id="p2-r2-line-chart" width="460" height="260"></canvas>
+              </div>
+              <p class="chart-canvas-caption">R² vs. 特徵數 k：呈現不同模型複雜度之擬合與外推能力。</p>
+            </div>
+
+            <div class="chart-canvas-card">
+              <div class="chart-canvas-header">
+                <span class="chart-canvas-legend">
+                  <span class="legend-dot dot-cv"></span> Train 5-Fold CV RMSE
+                  <span class="legend-dot dot-test ml-md"></span> Test RMSE
+                </span>
+              </div>
+              <div class="canvas-wrapper">
+                <canvas id="p2-rmse-line-chart" width="460" height="260"></canvas>
+              </div>
+              <p class="chart-canvas-caption">RMSE vs. 特徵數 k（數值越低越佳）：觀察誤差最低之轉折點。</p>
+            </div>
+          </div>
+
+          <!-- Dynamic Metrics & Feature List for Selected k -->
+          <div id="p2-k-dynamic-display" class="k-dynamic-panel mt-md"></div>
+        </div>
+      </div>
+
+      <!-- Method Detail Cards Grid -->
+      <div class="section-subhead mt-xl">
+        <span class="subhead-number">04</span>
+        <h3 class="subhead-title">各特徵選擇方法深度解析 · Detailed Method Specifications</h3>
+      </div>
+      <div id="p2-method-cards" class="method-atelier-grid"></div>
+
+      <!-- RFE Ranking Deep Dive Insight -->
+      <div class="insight-box mt-xl hidden" id="p2-rfe-insight-box">
+        <div class="insight-header">
+          <span class="insight-tag">METHODOLOGICAL CLARIFICATION</span>
+          <h4 class="insight-title">RFE 特徵排名（Ranking）的正確統計解讀</h4>
+        </div>
+        <p class="insight-text">
+          在 scikit-learn 的 RFE 機制中，入選最終模型的特徵其 <code>ranking_</code> 均標註為 <code>1</code>，代表它們同屬於「最優保留特徵子集」，<strong>並不代表排名為 1 的特徵之間重要性完全相同</strong>。而排名大於 1 的特徵（如 Rank 2, Rank 3...）則依序代表<strong>被淘汰的先後順序</strong>：排名數字愈大代表在愈早的迭代步驟中被剔除，數字愈小代表在排除群中堅持得愈久。
+        </p>
+      </div>
+
+      <!-- Forward SFS & RFE Step Tables (Desktop: 65% / 35%, Mobile: Stacked) -->
+      <div class="two-column-split-atelier mt-lg">
+        <div class="editorial-card split-sfs-card hidden" id="p2-sfs-steps-card">
+          <div class="card-top-bar">
+            <span class="card-top-tag">STEPWISE PROGRESSION</span>
+            <h4 class="card-inner-title">Forward SFS 逐步特徵加入過程 (依據 5-Fold CV 貪婪納入)</h4>
+          </div>
+          <p class="card-intro-text">檢視自 \(k=1\) 至 \(k=5\) 依據訓練集 5-Fold CV 貪婪納入特徵的軌跡：</p>
+          <div class="table-scroll-container" id="p2-sfs-steps-table"></div>
+        </div>
+
+        <div class="editorial-card split-rfe-card hidden" id="p2-rfe-steps-card">
+          <div class="card-top-bar">
+            <span class="card-top-tag">ELIMINATION ORDER</span>
+            <h4 class="card-inner-title">RFE 特徵重要性與淘汰序列</h4>
+          </div>
+          <p class="card-intro-text">清楚區分入選集合（Rank 1）與被剔除變數之先後次序：</p>
+          <div id="p2-rfe-ranking"></div>
+        </div>
+      </div>
+
+      <!-- Exhaustive Search Top 10 Subsets -->
+      <div class="card-wrapper mt-xl hidden" id="p2-exhaustive-card">
+        <div class="section-subhead">
+          <span class="subhead-number">04</span>
+          <h3 class="subhead-title">暴力窮舉全部 31 種特徵組合 · Top 10 Subsets by Train CV R²</h3>
+        </div>
+        <div class="editorial-card">
+          <p class="card-intro-text">
+            窮舉計算全特徵空間 \(2^5 - 1 = 31\) 種非空子集，<strong>嚴格以訓練集 5-Fold CV R² 由高至低排序</strong>。前十名清單如下：
+          </p>
+          <div class="table-scroll-container" id="p2-exhaustive-table"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         EXPERIMENT 03: CUSTOM DATASET (Custom CSV URL MLR)
+         ══════════════════════════════════════════════════════ -->
+    <section id="panel-3" class="experiment-panel">
+
+      <!-- Section Header -->
+      <div class="panel-banner">
+        <div class="banner-meta">
+          <span class="exp-badge">EXPERIMENT 03</span>
+          <span class="status-pill status-custom">自訂 CSV · MLR ANALYSIS</span>
+        </div>
+        <h2 class="panel-heading">Custom Dataset: 自訂 CSV 資料集多元線性迴歸分析</h2>
+        <p class="panel-lead">
+          輸入任意公開 CSV 的 URL，系統自動讀取資料、分析欄位型別，並使用
+          <strong>sklearn Pipeline</strong> 執行完整的多元線性迴歸，
+          回傳真實重新計算的指標與圖表。所有前處理嚴格僅在訓練集拟合，確保無資料洩漏。
+        </p>
+      </div>
+
+      <!-- Step 1: URL Input -->
+      <div class="custom-step-card mt-lg" id="cds-step1">
+        <div class="custom-step-header">
+          <span class="custom-step-num">STEP 1</span>
+          <h4 class="custom-step-title">輸入公開 CSV URL</h4>
+        </div>
+        <div class="custom-url-row">
+          <input
+            type="url"
+            id="cds-url-input"
+            class="custom-url-input"
+            placeholder="https://raw.githubusercontent.com/.../dataset.csv"
+            aria-label="CSV URL 輸入框"
+          />
+          <button id="cds-analyze-btn" class="btn-sage" onclick="cdsAnalyzeUrl()">
+            <span class="btn-icon">🔍</span>
+            <span>讀取欄位</span>
+          </button>
+        </div>
+        <p class="custom-hint">
+          支援公開可存取的 HTTP/HTTPS CSV 檔案。安全檢查：時間 15 秒、檔案 5 MB 上限、封鎖私有 IP 網段。
+        </p>
+        <div id="cds-analyze-error" class="custom-error-box hidden"></div>
+      </div>
+
+      <!-- Step 2: Column Selector (hidden until analyze succeeds) -->
+      <div class="custom-step-card mt-md hidden" id="cds-step2">
+        <div class="custom-step-header">
+          <span class="custom-step-num">STEP 2</span>
+          <h4 class="custom-step-title">選擇目標欄位與特徵欄位</h4>
+        </div>
+        <div id="cds-dataset-info" class="custom-dataset-info"></div>
+        <div class="custom-col-selectors">
+          <div class="custom-col-group">
+            <label class="custom-col-label" for="cds-target-select">🎯 目標欄位 (Target / Y)</label>
+            <select id="cds-target-select" class="custom-col-select"></select>
+          </div>
+          <div class="custom-col-group">
+            <label class="custom-col-label">📊 特徵欄位 (Features / X) — 可多選</label>
+            <div id="cds-feature-checkboxes" class="custom-feature-checkboxes"></div>
+          </div>
+        </div>
+        <div class="action-button-group mt-md">
+          <button id="cds-run-btn" class="btn-sage" onclick="cdsRunAnalysis()">
+            <span class="btn-icon">⚡</span>
+            <span>執行多元線性迴歸分析</span>
+          </button>
+        </div>
+        <div id="cds-run-error" class="custom-error-box hidden"></div>
+      </div>
+
+      <!-- Step 3: Results (hidden until run succeeds) -->
+      <div class="hidden" id="cds-step3">
+
+        <div class="section-subhead mt-xl">
+          <span class="subhead-number">01</span>
+          <h3 class="subhead-title">自訂資料集核心評估指標 · Model Performance Metrics</h3>
+        </div>
+        <div id="cds-metrics" class="metrics-grid"></div>
+
+        <div class="section-subhead mt-xl">
+          <span class="subhead-number">02</span>
+          <h3 class="subhead-title">視覺化診斷圖表 · Diagnostic Visualizations</h3>
+        </div>
+        <div class="charts-dual-grid">
+          <div class="editorial-chart-card">
+            <div class="chart-card-meta">
+              <span class="chart-type-tag">REGRESSION FIT</span>
+              <h4 class="chart-title">真實值 vs 預測值 (Actual vs Predicted)</h4>
+            </div>
+            <div class="chart-frame" id="cds-chart-avp">
+              <div class="chart-loading-ph">執行分析後顯示圖表...</div>
+            </div>
+          </div>
+          <div class="editorial-chart-card">
+            <div class="chart-card-meta">
+              <span class="chart-type-tag">ASSUMPTION CHECK</span>
+              <h4 class="chart-title">殘差分佈檢定 (Residual Plot)</h4>
+            </div>
+            <div class="chart-frame" id="cds-chart-resid">
+              <div class="chart-loading-ph">執行分析後顯示圖表...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editorial-chart-card mt-lg">
+          <div class="chart-card-meta">
+            <span class="chart-type-tag">COEFFICIENT BREAKDOWN</span>
+            <h4 class="chart-title">特徵係數長條圖 (Feature Coefficients)</h4>
+          </div>
+          <div class="chart-frame" id="cds-chart-coef">
+            <div class="chart-loading-ph">執行分析後顯示圖表...</div>
+          </div>
+        </div>
+
+        <div class="section-subhead mt-xl">
+          <span class="subhead-number">03</span>
+          <h3 class="subhead-title">迴歸方程式與係數表 · Model Equation &amp; Coefficients</h3>
+        </div>
+        <div class="editorial-card">
+          <div class="equation-hero-box">
+            <div class="eq-label">LINEAR REGRESSION EQUATION</div>
+            <div id="cds-equation" class="eq-display">執行分析後顯示...</div>
+          </div>
+          <div id="cds-coef-table" class="mt-md"></div>
+        </div>
+
+        <div class="section-subhead mt-xl">
+          <span class="subhead-number">04</span>
+          <h3 class="subhead-title">測試集樣本預測對比 · Out-of-Sample Predictions</h3>
+        </div>
+        <div class="editorial-card">
+          <div id="cds-predictions-table" class="table-scroll-container">執行分析後顯示...</div>
+        </div>
+
+        <!-- 05: Live Prediction Interactive Sandbox -->
+        <div class="section-subhead mt-xl">
+          <span class="subhead-number">05</span>
+          <h3 class="subhead-title">即時模型預測與敏感度實驗室 · Live Prediction &amp; Sensitivity Lab</h3>
+        </div>
+        <div class="editorial-card" id="cds-live-predict-card">
+          <div class="card-top-bar">
+            <span class="card-top-tag">REAL-TIME INFERENCE</span>
+            <h4 class="card-inner-title">使用當前訓練之無洩漏 Pipeline 進行單筆預測</h4>
+          </div>
+          <p class="card-intro-text">
+            拖曳數值滑桿或調整類別選項，系統即時使用當前已擬合的模型與前處理管線（包含中位數/眾數補值與 One-Hot Encoding）進行推論。若數值超出訓練集真實分佈，將自動觸發外插警示。
+          </p>
+
+          <div class="live-predict-layout mt-md">
+            <!-- Left: Dynamic Inputs Form -->
+            <div class="live-inputs-column">
+              <h5 class="live-col-title">調整輸入特徵數值</h5>
+              <div id="cds-live-inputs-container" class="live-inputs-list"></div>
+            </div>
+
+            <!-- Right: Prediction Output Display -->
+            <div class="live-result-column">
+              <div class="live-result-hero">
+                <span class="live-result-label">PREDICTED TARGET VALUE</span>
+                <div class="live-result-target" id="cds-live-target-name">Y (Target)</div>
+                <div class="live-result-number" id="cds-live-prediction-val">--</div>
+                <div class="live-result-status" id="cds-live-status-pill">
+                  <span class="status-pill status-ready">PIPELINE READY</span>
+                </div>
+              </div>
+
+              <!-- Extrapolation Warning Banner -->
+              <div id="cds-live-extrap-box" class="editorial-callout mt-md hidden" style="border-left-color: #e7a17e; background: #fffaf0;">
+                <div class="callout-label" style="color: #b45309;">
+                  <span class="callout-icon">⚠️</span>
+                  <span>EXTRAPOLATION ALERT · 外插預測警示</span>
+                </div>
+                <div class="callout-content" id="cds-live-extrap-msg" style="color: #92400e; font-size: 0.88rem;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ── EDITORIAL FOOTER ─────────────────────────────────── -->
+  <footer class="lab-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">FIELDNOTES / DATA LAB</span>
+        <span class="footer-sub">50 家新創公司｜多元線性迴歸分析平台 · Ivory &amp; Sage Edition</span>
+      </div>
+      <div class="footer-right">
+        <span class="footer-tech">Python · Flask · Scikit-Learn · CRISP-DM Framework</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

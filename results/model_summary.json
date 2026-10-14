@@ -1,0 +1,142 @@
+{
+  "project": "50_Startups_Multiple_Linear_Regression",
+  "crisp_dm_version": "2.1",
+  "style_theme": "Ivory & Sage — Editorial Data Lab",
+  "target_variable": "Profit",
+  "input_features": [
+    "R&D Spend",
+    "Administration",
+    "Marketing Spend",
+    "State"
+  ],
+  "transformed_features": [
+    "R&D Spend",
+    "Administration",
+    "Marketing Spend",
+    "State_Florida",
+    "State_New York"
+  ],
+  "reference_baseline_category": {
+    "State": "California"
+  },
+  "model_equation": {
+    "intercept": 54028.039593645815,
+    "coefficients": {
+      "R&D Spend": 0.8056300637153667,
+      "Administration": -0.0687878822771322,
+      "Marketing Spend": 0.02985544292263423,
+      "State_Florida": 938.7930061484284,
+      "State_New York": 6.987759966980563
+    }
+  },
+  "metrics": {
+    "train": {
+      "sample_count": 40,
+      "rmse": 8927.49,
+      "mae": 6662.66,
+      "r2": 0.9537,
+      "adjusted_r2": 0.9469
+    },
+    "test": {
+      "sample_count": 10,
+      "rmse": 9055.96,
+      "mae": 6961.48,
+      "r2": 0.8987,
+      "adjusted_r2": 0.7721
+    }
+  },
+  "test_predictions": [
+    {
+      "index": 0,
+      "actual": 134307.35,
+      "predicted": 126362.88,
+      "error": 7944.47,
+      "error_pct": 5.92
+    },
+    {
+      "index": 1,
+      "actual": 81005.76,
+      "predicted": 84608.45,
+      "error": 3602.69,
+      "error_pct": 4.45
+    },
+    {
+      "index": 2,
+      "actual": 99937.59,
+      "predicted": 99677.49,
+      "error": 260.1,
+      "error_pct": 0.26
+    },
+    {
+      "index": 3,
+      "actual": 64926.08,
+      "predicted": 46357.46,
+      "error": 18568.62,
+      "error_pct": 28.6
+    },
+    {
+      "index": 4,
+      "actual": 125370.37,
+      "predicted": 128750.48,
+      "error": 3380.11,
+      "error_pct": 2.7
+    },
+    {
+      "index": 5,
+      "actual": 35673.41,
+      "predicted": 50912.42,
+      "error": 15239.01,
+      "error_pct": 42.72
+    },
+    {
+      "index": 6,
+      "actual": 105733.54,
+      "predicted": 109741.35,
+      "error": 4007.81,
+      "error_pct": 3.79
+    },
+    {
+      "index": 7,
+      "actual": 107404.34,
+      "predicted": 100643.24,
+      "error": 6761.1,
+      "error_pct": 6.29
+    },
+    {
+      "index": 8,
+      "actual": 97427.84,
+      "predicted": 97599.28,
+      "error": 171.44,
+      "error_pct": 0.18
+    },
+    {
+      "index": 9,
+      "actual": 122776.86,
+      "predicted": 113097.43,
+      "error": 9679.43,
+      "error_pct": 7.88
+    }
+  ],
+  "research_insights": [
+    {
+      "topic": "研發支出統計關聯 (R&D Spend)",
+      "content": "在控制行政管理、行銷推廣與州別不變之條件下，模型預測研發支出每增加 $1，利潤預期平均增加約 $0.81，具有高度正向關聯。需特別注意此為統計迴歸之預測關聯，不能直接解讀為現實管理中的保證因果效果。"
+    },
+    {
+      "topic": "行銷推廣預測關聯 (Marketing Spend)",
+      "content": "在控制其他變數條件下，行銷支出每增加 $1，模型預測利潤增加約 $0.03。其係數小於研發支出，但仍具備顯著的正向協同預測價值。"
+    },
+    {
+      "topic": "管理支出預測關聯 (Administration)",
+      "content": "管理支出係數為微弱負值 (-0.0688)。在控制其他變數後，額外的內部行政支出並未在模型中對利潤產生正向關聯，反映成本結構與規模經濟控制之重要性。"
+    },
+    {
+      "topic": "地理州別差異解析 (State Dummy Effects)",
+      "content": "以加州（California）為對照基準，佛羅里達州 (+約 $939) 與紐約州 (+約 $7) 為固定利潤加減項（不乘以 $10,000）。相較於新創年均獲利十萬美元之尺度，地點差異極為微弱，設點州別並非獲利之關鍵預測變數。"
+    },
+    {
+      "topic": "訓練與測試 R² 差距之客觀解讀",
+      "content": "訓練集 R² 為 0.9537，測試集 R² 為 0.8987（差距約 0.055）。因資料集總樣本僅 N=50、測試集僅 N=10，指標差異主要反映了小樣本抽樣敏感性與隨機切分波動，不應直接判定為嚴重過度擬合。"
+    }
+  ]
+}
