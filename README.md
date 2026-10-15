@@ -12,7 +12,7 @@
 | 項目 | 連結 |
 | :--- | :--- |
 | **GitHub Repository** | [g115064011-arch / 50-startups-mlr-explorer](https://github.com/g115064011-arch/50-startups-mlr-explorer) |
-| **Vercel Live Demo** | 🔄 部署中（尚未上線） |
+| **Vercel Live Demo** | [https://50-startups-mlr-explorer.vercel.app/](https://50-startups-mlr-explorer.vercel.app/) |
 
 ### 網站首頁截圖
 
@@ -248,15 +248,15 @@ Profit = 54,032.55
 https://github.com/g115064011-arch/50-startups-mlr-explorer
 ```
 
-### Vercel 部署架構（規劃中）
+### Vercel 部署架構
 
-- `vercel.json` 已設定 Flask `app` 作為 WSGI 入口
+- `vercel.json` 已設定 Flask `app` 作為 WSGI 入口，靜態資源與 API 請求統一由 Flask 路由處理
 - `matplotlib` 使用非互動式 `Agg` 後端，相容 Linux 唯讀環境
 - 所有資料路徑使用相對路徑，不依賴 Windows 絕對路徑
 - EX1/EX2 使用記憶體快取或靜態 JSON，不寫入專案目錄
 - EX3 自訂模型快取使用 Python 全域變數（Serverless 每次冷啟動重置）
 
-> ⚠️ **部署狀態**：Vercel 部署尚未完成，Live Demo 連結待上線後更新。
+> 🚀 **Live Demo 網址**：[https://50-startups-mlr-explorer.vercel.app/](https://50-startups-mlr-explorer.vercel.app/)
 
 ---
 
