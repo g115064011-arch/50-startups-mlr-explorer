@@ -40,7 +40,11 @@ from analysis.custom_dataset import (
     clear_custom_model_cache,
 )
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder=os.path.join(BASE_DIR, "static"),
+    static_url_path="/static",
+)
 
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
 DATA_DIR = os.path.join(BASE_DIR, "data")
